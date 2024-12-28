@@ -5,12 +5,12 @@ from .models import Group
 def home(request):
     return render(request, 'index.html')
 
-def group_list(request):
+def groups_list(request):
     groups = Group.objects.all()
     ctx = {'groups': groups}
     return render(request, 'groups/groups-list.html', ctx)
 
-def group_add(request):
+def group_create(request):
     if request.method == 'POST':
         group_name = request.POST.get('group_name')
         class_teacher = request.POST.get('class_teacher')
@@ -33,7 +33,18 @@ def group_delete(request, pk):
     return redirect('groups:list')
 
 
-
+def group_update(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+    if request.method == 'POST':
+        group_name = request.POST.get('group_name')
+        class_teacher = request.POST.get('class_teacher')
+        if group_name and class_teacher:
+            group.group_name = group_name
+            group.class_teacher = class_teacher
+            group.save()
+            return redirect(group.get_detail_url())
+    ctx = {'group': group}
+    return render(request, 'groups/group-form.html', ctx)
 
 
 

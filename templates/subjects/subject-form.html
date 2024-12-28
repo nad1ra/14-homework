@@ -6,21 +6,22 @@
 <h1>Yangi fan yaratish</h1>
 <form id="createSubjectForm">
     <div class="form-group">
-        <label for="subjectName">Fan nomi:</label>
-        <input type="text" id="subjectName" name="subjectName" placeholder="Fan nomini kiriting" required>
+        <label for="subject_name">Fan nomi:</label>
+        <input type="text" id="subject_name" name="subject_name" placeholder="Fan nomini kiriting" required>
     </div>
     <div class="form-group">
         <label for="teachers">O'qituvchilar:</label>
         <select id="teachers" name="teachers" multiple required>
-            <option value="1">O'qituvchi 1</option>
-            <option value="2">O'qituvchi 2</option>
-            <option value="3">O'qituvchi 3</option>
-            <option value="4">O'qituvchi 4</option>
+            {% for teacher in teachers %}
+                <option value="1">O'qituvchi 1</option>
+            {% empty %}
+                <h2>Hozircha o'qitucvhilar yo'q</h2>
+            {% endfor %}
         </select>
     </div>
     <div class="actions">
         <button type="submit" class="btn"><i class="fas fa-save"></i> Saqlash</button>
-        <a href="subjects-list.html" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+        <a href="{% url 'subjects:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
     </div>
 </form>
 {% enblock %}
