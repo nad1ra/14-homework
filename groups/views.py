@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
+
+from teachers.models import Teacher
 from .models import Group
-
-
-def home(request):
-    return render(request, 'index.html')
 
 def groups_list(request):
     groups = Group.objects.all()
@@ -11,16 +9,22 @@ def groups_list(request):
     return render(request, 'groups/groups-list.html', ctx)
 
 def group_create(request):
+    teachers = Teacher.objects.all()
     if request.method == 'POST':
         group_name = request.POST.get('group_name')
-        class_teacher = request.POST.get('class_teacher')
-        if group_name and class_teacher:
-            Group.objects.create(
-                group_name=group_name,
-                class_teacher=class_teacher
-            )
-            return redirect('groups:list')
-    return render(request, 'groups/group-add.html')
+        class_teacher_id = request.POST.get('class_teacher')
+        if group_name and class_teacher_id:
+            class_teacher = Teacher.objects.get(pk=class_teacher_id)
+            if class_teacher:
+                Group.objects.create(
+                    group_name=group_name,
+                    class_teacher=class_teacher
+                )
+                return redirect('groups:list')
+            else:
+                error_message = "Bunday o'qituvchi mavjud emas"
+    ctx = {'teachers': teachers}
+    return render(request, 'groups/group-form.html', ctx)
 
 def group_detail(request, pk):
     group = get_object_or_404(Group, pk=pk)

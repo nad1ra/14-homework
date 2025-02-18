@@ -7,7 +7,7 @@
 <div class="student-details">
     <div class="student-info">
         <!-- Static content for a student's details -->
-        <img src="https://st5.depositphotos.com/23404642/73149/v/450/depositphotos_731494074-stock-illustration-portrait-smiling-teen-student-girl.jpg" alt="O'quvchi rasmi" id="studentImage" class="student-image">
+        <img src="{{ student.image.url }}" alt="O'quvchi rasmi" id="photo" class="student-image">
         <h2 id="full_name">{{ student.full_name }}</h2>
         <p>ID: <span id="studentId">{{ student.pk }}</span></p>
         <p>Guruh: <span id="studentGroup">{{ student.group }}</span></p>
@@ -17,7 +17,7 @@
     </div>
 </div>
 <div class="actions">
-    <a href="{% url 'subjects:update' %}" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
-    <a href="{% url 'subjects:delete' %}" id="deleteStudent" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+    <a href="{{ student.get_update_url }}" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
+    <a href="{{ student.get_delete_url }}" id="deleteStudent" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
 </div>
 {% endblock %}

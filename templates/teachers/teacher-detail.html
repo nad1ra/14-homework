@@ -7,17 +7,17 @@
 <div class="teacher-details">
     <div class="teacher-info">
         <!-- Static Teacher Image -->
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlTGzvC2GTQkEWZd26qymlZLNo7OfS1LwH5w&s" alt="O'qituvchi rasmi" class="teacher-image">
-        <h2>Jahongir Toshmatov</h2>
-        <p>ID: <span>001</span></p>
-        <p>Fan: <span>Matematika</span></p>
-        <p>Telefon: <span>+998 99 123 45 67</span></p>
-        <p>Email: <span>jahongir.toshmatov@mail.com</span></p>
-        <p>Ish tajribasi: <span>10 yil</span></p>
+        <img src="{{ teacher.image.url }}" alt="O'qituvchi rasmi" class="teacher-image">
+        <h2>{{ teacher.first_name }} {{ teacher.last_name }}</h2>
+        <p>ID: <span>{{ teacher.pk }}</span></p>
+        <p>Fan: <span>{{ teacher.subject }}</span></p>
+        <p>Telefon: <span>{{ teacher.teacher_phone }}</span></p>
+        <p>Email: <span>{{ teacher.teacher_email }}</span></p>
+        <p>Ish tajribasi: <span>{{ teacher.work_experience }}</span></p>
     </div>
 </div>
 <div class="actions">
-    <a href="teacher-update.html" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
-    <a href="teachers-list.html" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+    <a href="{{ teacher.get_update_url }}" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
+    <a href="{{ teacher.get_delete_url }}" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
 </div>
 {% endblock %}

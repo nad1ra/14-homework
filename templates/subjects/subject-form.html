@@ -4,7 +4,8 @@
 
 {% block content %}
 <h1>Yangi fan yaratish</h1>
-<form id="createSubjectForm">
+<form method="post" id="createSubjectForm">
+    {% csrf_token %}
     <div class="form-group">
         <label for="subject_name">Fan nomi:</label>
         <input type="text" id="subject_name" name="subject_name" placeholder="Fan nomini kiriting" required>
@@ -13,9 +14,12 @@
         <label for="teachers">O'qituvchilar:</label>
         <select id="teachers" name="teachers" multiple required>
             {% for teacher in teachers %}
-                <option value="1">O'qituvchi 1</option>
+                <option value="{{ teacher.id }">
+                    {% if teacher.teacher.id == teacher.id %}
+                    {% endif %}
+                    {{ teacher.first_name }}{{ teacher.last_name }}</option>
             {% empty %}
-                <h2>Hozircha o'qitucvhilar yo'q</h2>
+                <option>Hozircha o'qituvchilar yo'q</option>
             {% endfor %}
         </select>
     </div>
@@ -24,4 +28,4 @@
         <a href="{% url 'subjects:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
     </div>
 </form>
-{% enblock %}
+{% endblock %}

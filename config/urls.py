@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from groups.views import home
 from django.conf import settings
 from django.conf.urls.static import static
+from subjects.views import home
 
 
 urlpatterns = [
@@ -26,6 +26,8 @@ urlpatterns = [
     path('', home, name='home'),
     path('groups/', include('groups.urls')),
     path('subjects/', include('subjects.urls')),
+    path('students/', include('students.urls')),
+    path('teachers/', include('teachers.urls')),
 ]
 
 if settings.DEBUG:

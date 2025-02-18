@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+
+{% block title %}Music Collection{% endblock %}
+
+{% block content %}
+<h1>{% if teacher %}O'qituvchi ma'lumotini tahrirlash{% else %}Yangi O'qituvchi yaratish{% endif %}</h1>
+    <form  method="post" id="createTeacherForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="first_name">Ism:</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Ismingizni kiriting" value="{{ teacher.first_name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Familiya:</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Familiyangizni kiriting" value="{{ teacher.last_name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">Fan:</label>
+            <select id="subject" name="subject" required>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{% if teacher.subject.id == subject.id %}{% endif %}{{ subject.subject_name }}</option>
+                {% empty %}
+                    <option value="">Hozircha fanlar yo'q</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="teacher_phone">Telefon:</label>
+            <input type="tel" id="teacher_phone" name="teacher_phone" placeholder="Telefon raqamingizni kiriting" value="{{ teacher.teacher_phone }}" required>
+        </div>
+        <div class="form-group">
+            <label for="teacher_email">Email:</label>
+            <input type="email" id="teacher_email" name="teacher_email" placeholder="Email manzilingizni kiriting" value="{{ teacher.teacher_email }}" required>
+        </div>
+        <div class="form-group">
+            <label for="work_experience">Ish tajribasi (yil):</label>
+            <input type="number" id="work_experience" name="work_experience" placeholder="Ish tajribangizni kiriting" value="{{ teacher.work_experience }}" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Rasm:</label>
+            {% if teacher.image %}
+                <img src="{{ teacher.image.url }}" alt="Current Image" class="teacher-image">
+            {% endif %}
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        <div class="actins">
+            <button type="submit" class="btn">
+                <i class="fas fa-save"></i>{% if teacher %}Tahrirlash{% else %}Saqlash{% endif %}
+            </button>
+            <a href="{% url 'teachers:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i>Bekor qilish</a>
+        </div>
+    </form>
+{% endblock %}

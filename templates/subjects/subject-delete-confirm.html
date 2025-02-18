@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>O'chirishni tasdiqlaysizmi?</h2>
+  <p>{{ subject.subject_name }} fanini o'chirishni istaysizmi?</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Ha, o'chirish</button>
+    <a href="{% url 'subjects:list' %}" class="btn btn-secondary">Bekor qilish</a>
+  </form>
+{% endblock %}

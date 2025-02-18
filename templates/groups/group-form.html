@@ -4,19 +4,18 @@
 
 {% block content %}
 <h1>Guruh yaratish</h1>
-<form id="createGroupForm">
+<form id="createGroupForm" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="group_name">Guruh nomi:</label>
         <input type="text" id="group_name" name="group_name" placeholder="Guruh nomini kiriting" required>
     </div>
     <div class="form-group">
-        <label for="classTeacher">Sinf rahbari:</label>
-        <select id="classTeacher" name="classTeacher" required>
-            {% for teacher in teachers %}
-                <option value="">{{ group.class_teacher }}</option>
-                <option value="teacher1">O'qituvchi A</option>
+        <label for="class_teacher">Sinf rahbari:</label>
+        <select id="class_teacher" name="class_teacher" required>
+            {% for class_teacher in class_teachers %}
+                <option value="{{ class_teacher.id }}">{{ class_teacher.first_name }} {{ class_teacher.last_name }}</option>
             {% empty %}
-                <h2>Hozircha o'qituvchilar yo'q</h2>
+                <option>Hozircha o'qituvchilar yo'q</option>
             {% endfor %}
         </select>
     </div>
@@ -24,15 +23,19 @@
         <label for="students">O'quvchilar:</label>
         <select id="students" name="students" multiple required>
             {% for student in students %}
-                <option value="student1">{{ group.student.full_name }}</option>
+                <option value="{{ student.id }}" {% if group and student in group.students.all %}selected{% endif %}>
+                    {{ student.full_name }}
+                </option>
             {% empty %}
-                <h2>Hozircha o'quvchilar yo'q</h2>
+                <option>Hozircha o'quvchilar yo'q</option>
             {% endfor %}
         </select>
     </div>
     <div class="actions">
-        <a href="{% url 'groups:list' %}" class="btn"><i class="fas fa-save"></i> Saqlash</a>
-        <a href="{% url 'groups:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+        <button type="submit" class="btn">
+            <i class="fas fa-save"></i>{% if group %} Tahrirlash {% else %} Saqlash {% endif %}
+        </button>
+        <a href="{% url 'groups:list' %}" class="btn btn-secondary">Bekor qilish</a>
     </div>
 </form>
 {% endblock %}
